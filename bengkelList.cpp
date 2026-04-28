@@ -65,6 +65,7 @@ void cetakLayarUtama() {
     cout << "  _ \\<_\n";
     cout << " (_)/(_)  [SISTEM BOOKING ONLINE]\n";
     cout << "=========================================\n";
+    cout << "rafi " << endl;
 }
 
 void cariDataBengkel() {
