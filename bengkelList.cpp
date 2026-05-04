@@ -195,7 +195,7 @@ void prosesUbahAtauHapus() {
     }
     
     if (!pointerTarget) {
-        cout << "Entitas dengan ID " << targetIdentitas << " tidak terdaftar.\n";
+        cout << "Entitas dengan ID t " << targetIdentitas << " tidak terdaftar.\n";
         return;
     }
     
