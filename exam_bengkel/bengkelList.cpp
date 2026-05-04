@@ -63,7 +63,7 @@ void cetakLayarUtama() {
     cout << "=========================================\n";
     cout << "    __o\n";
     cout << "  _ \\<_\n";
-    cout << " (_)/(_)  [SISTEM BOOKING ONLINE]\n";
+    cout << " (_) (_)  [TT]\n";
     cout << "=========================================\n";
     cout << "rafi" << endl;
     cout << "sandi" << endl;
