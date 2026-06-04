@@ -4,9 +4,8 @@
 #include <limits>
 using namespace std;
 
-// ============================================================
+
 //  SEARCHING - Linear Search berdasarkan ID
-// ============================================================
 int cariBengkelByID(Bengkel data[], int n, int idCari) {
     for (int i = 0; i < n; i++) {
         if (data[i].id == idCari) {
@@ -16,9 +15,8 @@ int cariBengkelByID(Bengkel data[], int n, int idCari) {
     return -1;          
 }
 
-// ============================================================
+
 //  HELPER - Tampilkan detail satu bengkel
-// ============================================================
 void tampilDetailBengkel(const Bengkel &b) {
     cout << "+-------------------------------------+" << endl;
     cout << "| ID           : " << b.id << endl;
@@ -30,9 +28,7 @@ void tampilDetailBengkel(const Bengkel &b) {
     cout << "+-------------------------------------+" << endl;
 }
 
-// ============================================================
 //  UPDATE - Mengubah data bengkel menggunakan POINTER
-// ============================================================
 void updateBengkel(Bengkel *b) {
     int pilihField;
 
@@ -94,9 +90,7 @@ void updateBengkel(Bengkel *b) {
     tampilDetailBengkel(*b);
 }
 
-// ============================================================
 //  DELETE - Hapus data & SHIFTING elemen array
-// ============================================================
 void hapusBengkel(Bengkel data[], int &n, int index) {
     cout << "\n== Data yang akan dihapus ==" << endl;
     tampilDetailBengkel(data[index]);
@@ -117,12 +111,9 @@ void hapusBengkel(Bengkel data[], int &n, int index) {
     }
 }
 
-// ============================================================
 //  FUNGSI UTAMA MENU 4 - Manajemen Data Bengkel
 //  Menggabungkan : Searching + Pointer + Shifting
-// ============================================================
 void manajemenDataBengkel(Bengkel data[], int &n) {
-    // Cek apakah data kosong
     if (n == 0) {
         cout << "Database bengkel kosong! Tidak ada data untuk dikelola." << endl;
         return;

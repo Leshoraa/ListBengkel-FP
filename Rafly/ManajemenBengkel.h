@@ -14,16 +14,10 @@ struct Bengkel {
 
 const int MAX_DATA = 100;
 
-// ============================================================
 //  DEKLARASI FUNGSI UTAMA (dipanggil dari main.cpp)
-// ============================================================
-
 void manajemenDataBengkel(Bengkel data[], int &n);
 
-// ============================================================
 //  DEKLARASI FUNGSI PENDUKUNG
-// ============================================================
-
 int  cariBengkelByID(Bengkel data[], int n, int idCari);
 void updateBengkel(Bengkel *b);
 void hapusBengkel(Bengkel data[], int &n, int index);

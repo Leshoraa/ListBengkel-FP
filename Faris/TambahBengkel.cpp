@@ -4,17 +4,14 @@
 #include <limits>
 using namespace std;
 
-// ============================================================
 //  CEK KAPASITAS - Apakah array sudah penuh (MAX_DATA = 100)
-// ============================================================
 bool arrayPenuh(int n) {
     return n >= MAX_DATA;
 }
 
-// ============================================================
+
 //  GENERATE ID OTOMATIS - ID unik berdasarkan data yang ada
 //  Mencari nilai ID tertinggi lalu +1
-// ============================================================
 int generateID(Bengkel data[], int n) {
     if (n == 0) return 1;
 
@@ -27,9 +24,7 @@ int generateID(Bengkel data[], int n) {
     return maxID + 1;
 }
 
-// ============================================================
 //  INPUT - Mengisi detail bengkel baru dari keyboard
-// ============================================================
 void inputDetailBengkel(Bengkel &b, int id) {
     b.id = id;
 
@@ -51,18 +46,14 @@ void inputDetailBengkel(Bengkel &b, int id) {
     cin  >> b.harga;
 }
 
-// ============================================================
 //  SIMPAN - Menyimpan struct Bengkel ke dalam array
-// ============================================================
 void simpanKeBengkel(Bengkel data[], int &n, Bengkel baru) {
     data[n] = baru;
     n++;
 }
 
-// ============================================================
 //  FUNGSI UTAMA MENU 2 - Tambah Bengkel
 //  Alur: Cek Penuh -> Input Detail -> Simpan ke Array Struct
-// ============================================================
 void tambahBengkel(Bengkel data[], int &n) {
     cout << "========================================" << endl;
     cout << "         TAMBAH DATA BENGKEL            " << endl;
