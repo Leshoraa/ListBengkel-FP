@@ -22,20 +22,23 @@ BookingNode* queueRear = nullptr;
  */
 void enqueueBooking() {
     string customerName;
-    cout << "Input Nama Pelanggan: ";
+    cout << "╭──── Masukkan Nama Pelanggan: ";
     cin.ignore();
     getline(cin, customerName);
 
-    cout << "1. Kendala Kerusakan\n";
-    cout << "2. Servis rutin\n";
-    cout << "Pilih menu: ";
+    cout << "│\n";
+    cout << "│ 1. Kendala Kerusakan\n";
+    cout << "│ 2. Servis rutin\n";
+    cout << "│\n";
+    cout << "├──── Pilih menu: ";
     int opsi;
     cin >> opsi;
     cin.ignore();
 
     string detailLayanan;
     if (opsi == 1) {
-        cout << "Isikan Kendala Kerusakan: ";
+        cout << "│\n";
+        cout << "╰──── Isikan Kendala Kerusakan: ";
         getline(cin, detailLayanan);
     } else {
         detailLayanan = "Servis rutin";
@@ -61,6 +64,13 @@ void enqueueBooking() {
         queueRear->next = newNode;
         queueRear = newNode;
     }
-
-    cout << "Token [" << newToken << "] berhasil didaftarkan ke dalam antrean." << endl;
+    
+    cout << "\n\n\n";
+    cout << "╭──────────────────────────────────────────────────────\n";
+    cout << "\n";
+    cout << "╭──────────────────────────────────────────────────────\n";
+    cout << "│\n";
+    cout << "│ Token [" << newToken << "] berhasil didaftarkan ke dalam antrean." << endl;
+    cout << "│\n";
+    cout << "╰──────────────────────────────────────────────────────\n\n\n\n";
 }

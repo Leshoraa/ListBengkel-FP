@@ -10,18 +10,19 @@ Bengkel dataBengkel[MAX_DATA];
 int jumlahBengkel = 0;
 
 void tampilmenu() {
-    cout << "=====================================\n";
-    cout << "  SISTEM MANAGEMEN BENGKEL\n";
-    cout << "=====================================\n";
-    cout << "1. Cari Bengkel\n";
-    cout << "2. Tambah bengkel\n";
-    cout << "3. Tampilkan Semua Bengkel\n";
-    cout << "4. Managemen Data Bengkel(Update/Delete)\n";
-    cout << "5. Booking Service\n";
-    cout << "6. Log Riwayat\n";
-    cout << "7. keluar\n";
-    cout << "=====================================\n";
-    cout << "Pilih menu : ";
+    cout << "╭───────────────────────────────────────────╮\n";
+    cout << "│ SISTEM MANAGEMEN BENGKEL\n";
+    cout << "├───────────────────────────────────────────╯\n";
+    cout << "│ 1. Cari Bengkel\n";
+    cout << "│ 2. Tambah bengkel\n";
+    cout << "│ 3. Tampilkan Semua Bengkel\n";
+    cout << "│ 4. Managemen Data Bengkel(Update/Delete)\n";
+    cout << "│ 5. Booking Service\n";
+    cout << "│ 6. Log Riwayat\n";
+    cout << "│ 7. keluar\n";
+    cout << "├───────────────────────────────────────────╯\n";
+    cout << "│\n";
+    cout << "╰──── Pilih menu : ";
 }
 
 int main() {
