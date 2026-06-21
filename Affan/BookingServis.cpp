@@ -14,6 +14,12 @@ struct BookingNode {
 BookingNode* queueFront = nullptr;
 BookingNode* queueRear = nullptr;
 
+/**
+ * @brief Daftarin pelanggan baru ke antrean servis.
+ * 
+ * Pake konsep Queue (FIFO - First In First Out).
+ * Token antrean di-generate otomatis acak.
+ */
 void enqueueBooking() {
     string customerName;
     cout << "Input Nama Pelanggan: ";
@@ -35,6 +41,7 @@ void enqueueBooking() {
         detailLayanan = "Servis rutin";
     }
 
+    // Generate 3 digit token acak (100 - 999)
     int newToken = rand() % 900 + 100;
 
     BookingNode* newNode = new BookingNode;
