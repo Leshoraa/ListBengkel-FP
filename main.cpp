@@ -1,11 +1,13 @@
 #include <iostream>
 #include "Affan/LogRiwayat.cpp"
 #include "Rafly/ManajemenBengkel.cpp"
+#include "Faris/TambahBengkel.cpp"
+
 using namespace std;
 
-// Array global & jumlah data bengkel (dipakai semua modul)
 Bengkel dataBengkel[MAX_DATA];
 int jumlahBengkel = 0;
+
 void tampilmenu() {
     cout << "=====================================\n";
     cout << "  SISTEM MANAGEMEN BENGKEL\n";
@@ -20,41 +22,41 @@ void tampilmenu() {
     cout << "=====================================\n";
     cout << "Pilih menu : ";
 }
-    int main() {
-        int pilihan;
-        do {
-            tampilmenu();
-            cin >> pilihan;
-            cout << endl;
 
-            switch(pilihan) {
-                case 1:
-                    cout << "Menu Cari Bengkel\n";
-                    break;
-                case 2:
-                    cout << "Menu Tambah Bengkel\n";
-                    break;
-                case 3:
-                    cout << "Menu Tambahkan Semua Data\n";
-                    break;
-                case 4:
-                    manajemenDataBengkel(dataBengkel, jumlahBengkel);
-                    break;
-                case 5:
-                    enqueueBooking();
-                    break;
-                case 6:
-                    displaySearchHistory();
-                    break;
-                case 7:
-                    cout << "Terimakasih\n";
-                    break;
-                default:
-                    cout << "Pilihan Tidak Valid!!\n";
-                    break;
-            }
-            cout << endl;
+int main() {
+    int pilihan;
+    do {
+        tampilmenu();
+        cin >> pilihan;
+        cout << endl;
+
+        switch(pilihan) {
+            case 1:
+                cout << "Menu Cari Bengkel\n";
+                break;
+            case 2:
+                tambahBengkel(dataBengkel, jumlahBengkel);
+                break;
+            case 3:
+                cout << "Menu Tambahkan Semua Data\n";
+                break;
+            case 4:
+                manajemenDataBengkel(dataBengkel, jumlahBengkel);
+                break;
+            case 5:
+                enqueueBooking();
+                break;
+            case 6:
+                displaySearchHistory();
+                break;
+            case 7:
+                cout << "Terimakasih\n";
+                break;
+            default:
+                cout << "Pilihan Tidak Valid!!\n";
+                break;
         }
-        while (pilihan != 7);
-        return 0;
-    }
+        cout << endl;
+    } while (pilihan != 7);
+    return 0;
+}
