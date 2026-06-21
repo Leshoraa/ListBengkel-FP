@@ -123,7 +123,18 @@ void manajemenDataBengkel(Bengkel data[], int &n) {
     cout << "========================================" << endl;
     cout << "  MANAJEMEN DATA BENGKEL (UPDATE/DELETE)" << endl;
     cout << "========================================" << endl;
-    cout << "Masukkan ID Bengkel : ";
+    
+    cout << "\nDaftar Bengkel Tersedia:" << endl;
+    cout << "+------+---------------------------------+" << endl;
+    cout << "| ID   | Nama Bengkel                    |" << endl;
+    cout << "+------+---------------------------------+" << endl;
+    for (int i = 0; i < n; i++) {
+        cout << "| " << left << setw(4) << data[i].id 
+             << " | " << setw(31) << data[i].nama << " |" << endl;
+    }
+    cout << "+------+---------------------------------+" << endl;
+
+    cout << "\nMasukkan ID Bengkel : ";
     cin >> idCari;
 
     // SEARCHING - cari posisi index berdasarkan ID
