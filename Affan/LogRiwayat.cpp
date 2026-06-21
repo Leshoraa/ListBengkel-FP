@@ -25,7 +25,7 @@ void displaySearchHistory() {
 
 /**
  * 
- * NOTE:  
+ * NOTE:
  * ini fungsi wajib dipanggil ke code tiap kali ada pencarian
  */
 void pushSearchHistory(string keyword) {

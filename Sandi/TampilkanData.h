@@ -4,7 +4,7 @@
 #include <string>
 
 
-/* NOTE
+/* NOTE:
 * ! JANGAN bikin struct di .h dan deklarasinya.
 *
 */
@@ -16,13 +16,13 @@ struct Bengkel {
     std::string daerah;
 };
 
-/* NOTE
+/* NOTE:
 * ? Kamu yakin pake extern? Udah dibahas kah sama dosennya?
 *
 * Better sesuaiin sama materi yang dikasih aja,
 * Biar nanti gampang pas dipresentasiin.
 */
-
+1
 // Deklarasi Global Array untuk data Bengkel agar bisa diakses bareng-bareng
 extern Bengkel databaseBengkel[100];
 extern int jumlahBengkel; 
