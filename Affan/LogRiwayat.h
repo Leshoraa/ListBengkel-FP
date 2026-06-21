@@ -3,7 +3,6 @@
 
 #include <string>
 
-void enqueueBooking();
 void displaySearchHistory();
 void pushSearchHistory(std::string keyword);
 

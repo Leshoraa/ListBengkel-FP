@@ -1,60 +1,15 @@
 #include "LogRiwayat.h"
 #include <iostream>
-#include <cstdlib>
 
 using namespace std;
-
-struct BookingNode {
-    int tokenId;
-    string customerName;
-    BookingNode* next;
-};
 
 struct HistoryNode {
     string keyword;
     HistoryNode* next;
 };
 
-BookingNode* queueFront = nullptr;
-BookingNode* queueRear = nullptr;
 HistoryNode* stackTop = nullptr;
 
-/**
- * enqueueBooking - Masukkin pelanggan ke antrean servis
- * pake prinsip FIFO (First In First Out)
- */
-void enqueueBooking() {
-    string customerName;
-    cout << "Input Nama Pelanggan: ";
-    cin.ignore();
-    getline(cin, customerName);
-
-    int newToken = rand() % 900 + 100;
-
-    BookingNode* newNode = new BookingNode;
-    if (!newNode) {
-        cerr << "Kesalahan sistem: Alokasi memori gagal." << endl;
-        return;
-    }
-
-    newNode->tokenId = newToken;
-    newNode->customerName = customerName;
-    newNode->next = nullptr;
-
-    if (!queueFront) {
-        queueFront = queueRear = newNode;
-    } else {
-        queueRear->next = newNode;
-        queueRear = newNode;
-    }
-
-    cout << "Token [" << newToken << "] berhasil didaftarkan ke dalam antrean." << endl;
-}
-
-/**
- * displaySearchHistory - nampilin log aktivitas dari Stack
- * pake prinsip LIFO (Last In First Out)
- */
 void displaySearchHistory() {
     if (!stackTop) {
         cout << "Log riwayat kosong. Belum ada aktivitas pencarian." << endl;
