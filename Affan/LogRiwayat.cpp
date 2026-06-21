@@ -1,23 +1,20 @@
-#include "ServiceManager.h"
+#include "LogRiwayat.h"
 #include <iostream>
-#include <cstdlib> 
+#include <cstdlib>
 
 using namespace std;
 
-// node buat antrean booking (Queue)
 struct BookingNode {
     int tokenId;
     string customerName;
     BookingNode* next;
 };
 
-// node buat riwayat pencarian (Stack)
 struct HistoryNode {
     string keyword;
     HistoryNode* next;
 };
 
-// pointer global buat ngelola Queue dan Stack
 BookingNode* queueFront = nullptr;
 BookingNode* queueRear = nullptr;
 HistoryNode* stackTop = nullptr;
@@ -37,21 +34,20 @@ void enqueueBooking() {
     BookingNode* newNode = new BookingNode;
     if (!newNode) {
         cerr << "Kesalahan sistem: Alokasi memori gagal." << endl;
-        return; 
+        return;
     }
 
     newNode->tokenId = newToken;
     newNode->customerName = customerName;
     newNode->next = nullptr;
 
-    // logika queue: masukkin node baru di posisi paling belakang.
     if (!queueFront) {
         queueFront = queueRear = newNode;
     } else {
         queueRear->next = newNode;
         queueRear = newNode;
     }
-    
+
     cout << "Token [" << newToken << "] berhasil didaftarkan ke dalam antrean." << endl;
 }
 
@@ -80,7 +76,7 @@ void displaySearchHistory() {
 void pushSearchHistory(string keyword) {
     HistoryNode* newNode = new HistoryNode;
     if (!newNode) return;
-    
+
     newNode->keyword = keyword;
     newNode->next = stackTop;
     stackTop = newNode;

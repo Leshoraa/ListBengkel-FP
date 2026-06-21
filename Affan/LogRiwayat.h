@@ -1,5 +1,5 @@
-#ifndef SERVICEMANAGER_H
-#define SERVICEMANAGER_H
+#ifndef LOGRIWAYAT_H
+#define LOGRIWAYAT_H
 
 #include <string>
 
