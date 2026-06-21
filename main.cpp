@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Affan/LogRiwayat.h"
-#include "Rafly/ManajemenBengkel.h"
+#include "Affan/LogRiwayat.cpp"
+#include "Rafly/ManajemenBengkel.cpp"
 using namespace std;
 
 // Array global & jumlah data bengkel (dipakai semua modul)
