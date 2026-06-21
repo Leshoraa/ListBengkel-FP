@@ -5,9 +5,9 @@
 
 
 /** NOTE:
-* ! JANGAN bikin struct di .h dan deklarasinya.
-*
-*/
+ * ! JANGAN bikin struct di .h dan deklarasinya.
+ *
+ */
 
 // Struct untuk data Bengkel (Maksimal 100 data di Array)
 struct Bengkel {
