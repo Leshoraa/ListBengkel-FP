@@ -18,31 +18,33 @@ int cariBengkelByID(Bengkel data[], int n, int idCari) {
 
 //  HELPER - Tampilkan detail satu bengkel
 void tampilDetailBengkel(const Bengkel &b) {
-    cout << "+-------------------------------------+" << endl;
-    cout << "| ID           : " << b.id << endl;
-    cout << "| Nama         : " << b.nama << endl;
-    cout << "| Layanan      : " << b.jenis_layanan << endl;
-    cout << "| Alamat       : " << b.alamat << endl;
-    cout << "| No. Telepon  : " << b.no_telepon << endl;
-    cout << "| Harga        : Rp " << fixed << setprecision(0) << b.harga << endl;
-    cout << "+-------------------------------------+" << endl;
+    cout << "╭──────────────────────────────────────────────────────\n";
+    cout << "│ ID           : " << b.id << endl;
+    cout << "│ Nama         : " << b.nama << endl;
+    cout << "│ Layanan      : " << b.jenis_layanan << endl;
+    cout << "│ Alamat       : " << b.alamat << endl;
+    cout << "│ No. Telepon  : " << b.no_telepon << endl;
+    cout << "│ Harga        : Rp " << fixed << setprecision(0) << b.harga << endl;
+    cout << "╰──────────────────────────────────────────────────────\n";
 }
 
 //  UPDATE - Mengubah data bengkel menggunakan POINTER
 void updateBengkel(Bengkel *b) {
     int pilihField;
 
-    cout << "\n== Data Saat Ini ==" << endl;
+    cout << "\n╭──── Data Saat Ini \n";
     tampilDetailBengkel(*b);
 
-    cout << "\nPilih field yang ingin diubah:" << endl;
-    cout << "1. Nama Bengkel" << endl;
-    cout << "2. Jenis Layanan" << endl;
-    cout << "3. Alamat" << endl;
-    cout << "4. No. Telepon" << endl;
-    cout << "5. Harga" << endl;
-    cout << "6. Ubah Semua Data" << endl;
-    cout << "Pilih : ";
+    cout << "│\n";
+    cout << "│ Pilih field yang ingin diubah:\n";
+    cout << "│ 1. Nama Bengkel\n";
+    cout << "│ 2. Jenis Layanan\n";
+    cout << "│ 3. Alamat\n";
+    cout << "│ 4. No. Telepon\n";
+    cout << "│ 5. Harga\n";
+    cout << "│ 6. Ubah Semua Data\n";
+    cout << "│\n";
+    cout << "├──── Pilih : ";
     cin >> pilihField;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
@@ -85,18 +87,20 @@ void updateBengkel(Bengkel *b) {
             return;
     }
 
-    cout << "\n>> Data berhasil diperbarui! <<" << endl;
-    cout << "\n== Data Setelah Update ==" << endl;
+    cout << "\n╭──────────────────────────────────────────────────────\n";
+    cout << "│ Data berhasil diperbarui!\n";
+    cout << "╰──────────────────────────────────────────────────────\n";
+    cout << "\n╭──── Data Setelah Update \n";
     tampilDetailBengkel(*b);
 }
 
 //  DELETE - Hapus data & SHIFTING elemen array
 void hapusBengkel(Bengkel data[], int &n, int index) {
-    cout << "\n== Data yang akan dihapus ==" << endl;
+    cout << "\n╭──── Data yang akan dihapus \n";
     tampilDetailBengkel(data[index]);
 
     char konfirmasi;
-    cout << "Yakin ingin menghapus data ini? (y/n) : ";
+    cout << "├──── Yakin ingin menghapus data ini? (y/n) : ";
     cin >> konfirmasi;
 
     if (konfirmasi == 'y' || konfirmasi == 'Y') {
@@ -105,9 +109,13 @@ void hapusBengkel(Bengkel data[], int &n, int index) {
         }
         n--;  
 
-        cout << "\n>> Data berhasil dihapus! Sisa data: " << n << " bengkel <<" << endl;
+        cout << "\n╭──────────────────────────────────────────────────────\n";
+        cout << "│ Data berhasil dihapus! Sisa data: " << n << " bengkel\n";
+        cout << "╰──────────────────────────────────────────────────────\n";
     } else {
-        cout << "Penghapusan dibatalkan." << endl;
+        cout << "\n╭──────────────────────────────────────────────────────\n";
+        cout << "│ Penghapusan dibatalkan.\n";
+        cout << "╰──────────────────────────────────────────────────────\n";
     }
 }
 
@@ -120,21 +128,22 @@ void manajemenDataBengkel(Bengkel data[], int &n) {
     }
 
     int idCari;
-    cout << "========================================" << endl;
-    cout << "  MANAJEMEN DATA BENGKEL (UPDATE/DELETE)" << endl;
-    cout << "========================================" << endl;
+    cout << "╭──────────────────────────────────────────────────────\n";
+    cout << "│ MANAJEMEN DATA BENGKEL (UPDATE/DELETE)\n";
+    cout << "├──────────────────────────────────────────────────────\n";
     
-    cout << "\nDaftar Bengkel Tersedia:" << endl;
-    cout << "+------+---------------------------------+" << endl;
-    cout << "| ID   | Nama Bengkel                    |" << endl;
-    cout << "+------+---------------------------------+" << endl;
+    cout << "│ Daftar Bengkel Tersedia:\n";
+    cout << "│ ╭──────┬─────────────────────────────────╮\n";
+    cout << "│ │ ID   │ Nama Bengkel                    │\n";
+    cout << "│ ├──────┼─────────────────────────────────┤\n";
     for (int i = 0; i < n; i++) {
-        cout << "| " << left << setw(4) << data[i].id 
-             << " | " << setw(31) << data[i].nama << " |" << endl;
+        cout << "│ │ " << left << setw(4) << data[i].id 
+             << " │ " << setw(31) << data[i].nama << " │\n";
     }
-    cout << "+------+---------------------------------+" << endl;
+    cout << "│ ╰──────┴─────────────────────────────────╯\n";
 
-    cout << "\nMasukkan ID Bengkel : ";
+    cout << "│\n";
+    cout << "├──── Masukkan ID Bengkel : ";
     cin >> idCari;
 
     // SEARCHING - cari posisi index berdasarkan ID
@@ -142,19 +151,25 @@ void manajemenDataBengkel(Bengkel data[], int &n) {
 
 
     if (index == -1) {
-        cout << "\n>> ID Bengkel [" << idCari << "] tidak ditemukan! <<" << endl;
+        cout << "\n╭──────────────────────────────────────────────────────\n";
+        cout << "│ ID Bengkel [" << idCari << "] tidak ditemukan!\n";
+        cout << "╰──────────────────────────────────────────────────────\n";
         return;
     }
 
-    cout << "\n>> ID Bengkel [" << idCari << "] ditemukan! <<" << endl;
+    cout << "\n╭──────────────────────────────────────────────────────\n";
+    cout << "│ ID Bengkel [" << idCari << "] ditemukan!\n";
+    cout << "╰──────────────────────────────────────────────────────\n";
     tampilDetailBengkel(data[index]);
 
     int aksi;
-    cout << "\nPilih Aksi:" << endl;
-    cout << "1. Update Data" << endl;
-    cout << "2. Delete Data" << endl;
-    cout << "3. Batal (Kembali ke Menu)" << endl;
-    cout << "Pilih : ";
+    cout << "│\n";
+    cout << "│ Pilih Aksi:\n";
+    cout << "│ 1. Update Data\n";
+    cout << "│ 2. Delete Data\n";
+    cout << "│ 3. Batal (Kembali ke Menu)\n";
+    cout << "│\n";
+    cout << "├──── Pilih : ";
     cin >> aksi;
 
     switch (aksi) {
