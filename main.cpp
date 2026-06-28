@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 #include "Affan/BookingServis.cpp"
 #include "Affan/LogRiwayat.cpp"
 #include "Rafly/ManajemenBengkel.cpp"
@@ -28,8 +29,10 @@ void tampilmenu() {
 int main() {
     int pilihan;
     do {
+        system("clear");
         tampilmenu();
         cin >> pilihan;
+        system("clear");
         cout << endl;
 
         switch(pilihan) {
@@ -59,6 +62,11 @@ int main() {
                 break;
         }
         cout << endl;
+        if (pilihan != 7) {
+            cout << "Tekan Enter untuk melanjutkan...";
+            cin.ignore(10000, '\n');
+            cin.get();
+        }
     } while (pilihan != 7);
     return 0;
 }

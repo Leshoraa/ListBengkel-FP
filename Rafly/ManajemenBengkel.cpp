@@ -2,6 +2,7 @@
 #include <iostream>
 #include <iomanip>
 #include <limits>
+#include <cstdlib>
 using namespace std;
 
 
@@ -47,6 +48,7 @@ void updateBengkel(Bengkel *b) {
     cout << "├──── Pilih : ";
     cin >> pilihField;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    system("clear");
 
       // pointer arrow operator
     switch (pilihField) {
@@ -145,6 +147,7 @@ void manajemenDataBengkel(Bengkel data[], int &n) {
     cout << "│\n";
     cout << "├──── Masukkan ID Bengkel : ";
     cin >> idCari;
+    system("clear");
 
     // SEARCHING - cari posisi index berdasarkan ID
     int index = cariBengkelByID(data, n, idCari);
@@ -171,6 +174,7 @@ void manajemenDataBengkel(Bengkel data[], int &n) {
     cout << "│\n";
     cout << "├──── Pilih : ";
     cin >> aksi;
+    system("clear");
 
     switch (aksi) {
         case 1:
