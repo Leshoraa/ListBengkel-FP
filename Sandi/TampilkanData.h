@@ -8,6 +8,13 @@
 // --- HAPUS / BLOK struct Bengkel { ... }; YANG ADA DI SINI SEBELUMNYA ---
 // (Jangan ada lagi tulisan struct Bengkel { ... } di file ini)
 
+/** NOTE:
+* ? Kamu yakin pake extern? Udah dibahas kah sama dosennya?
+*
+* Better sesuaiin sama materi yang dikasih aja,
+* Biar nanti gampang pas dipresentasiin.
+*/
+
 // Deklarasi Global Array untuk data Bengkel agar bisa diakses bareng-bareng
 // Pastikan namanya dataBengkel ya, bukan databaseBengkel
 extern Bengkel dataBengkel[100]; // atau [MAX_DATA] jika 100 error

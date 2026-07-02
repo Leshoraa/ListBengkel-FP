@@ -1,4 +1,5 @@
 #include "TambahBengkel.h"
+#include "FileHandling.h"
 #include <iostream>
 #include <iomanip>
 #include <limits>
@@ -77,6 +78,9 @@ void tambahBengkel(Bengkel data[], int &n) {
 
     // --- SIMPAN KE ARRAY STRUCT ---
     simpanKeBengkel(data, n, baru);
+    
+    // --- SIMPAN KE FILE FSTREAM ---
+    saveData(data, n);
 
     cout << "\n>> Data bengkel berhasil disimpan! "
          << "Total data saat ini: " << n << " bengkel. <<" << endl;
