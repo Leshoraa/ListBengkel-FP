@@ -5,5 +5,8 @@
 
 void displaySearchHistory();
 void pushSearchHistory(std::string keyword);
+void popSearchHistory();
+void menuLogRiwayat();
+void clearStack();
 
 #endif

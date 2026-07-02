@@ -1,4 +1,5 @@
 #include "ManajemenBengkel.h"
+#include "../Faris/FileHandling.h"
 #include <iostream>
 #include <iomanip>
 #include <limits>
@@ -179,9 +180,11 @@ void manajemenDataBengkel(Bengkel data[], int &n) {
     switch (aksi) {
         case 1:
             updateBengkel(&data[index]);
+            saveData(data, n);
             break;
         case 2:
             hapusBengkel(data, n, index);
+            saveData(data, n);
             break;
         case 3:
             cout << "Kembali ke menu utama." << endl;

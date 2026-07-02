@@ -1,0 +1,10 @@
+# Abaikan folder dokumen (berisi PDF dan flowchart)
+dokumen/
+
+# Abaikan file binary/kompilasi
+main
+
+# Abaikan file data / laporan teks sementara
+data_users.txt
+data_bengkel.txt
+nota_booking_*.txt
