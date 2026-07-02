@@ -1,55 +1,91 @@
 #include "TampilkanData.h"
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
-// Inisialisasi variabel global
-Bengkel databaseBengkel[100];
-int jumlahBengkel = 0; 
+extern void pushSearchHistory(string aktivitas); 
 
-// ==========================================
+// ======================================================
 // TUGAS SANDI: MENU 3 - TAMPILKAN & SORTING
-// ==========================================
+// ======================================================
 
-// Fungsi Bubble Sort A-Z berdasarkan Nama Bengkel
 void bubbleSortBengkel() {
     for (int i = 0; i < jumlahBengkel - 1; i++) {
         for (int j = 0; j < jumlahBengkel - i - 1; j++) {
-            // Membandingkan nama bengkel (A-Z)
-            if (databaseBengkel[j].namaBengkel > databaseBengkel[j + 1].namaBengkel) {
-                // Proses SWAP / Tukar posisi data
-                Bengkel temp = databaseBengkel[j];
-                databaseBengkel[j] = databaseBengkel[j + 1];
-                databaseBengkel[j + 1] = temp;
+            // Sudah diganti menjadi .nama
+            if (dataBengkel[j].nama > dataBengkel[j + 1].nama) {
+                Bengkel temp = dataBengkel[j];
+                dataBengkel[j] = dataBengkel[j + 1];
+                dataBengkel[j + 1] = temp;
             }
         }
     }
 }
 
-// Fungsi Menampilkan Semua Data
 void tampilkanSemuaData() {
-    cout << "\n=== MENU 3: TAMPILKAN SEMUA DATA BENGKEL ===" << endl;
-    
-    // Validasi Data Kosong (Sesuai Flowchart)
     if (jumlahBengkel == 0) {
-        cout << "[Pesan]: Database Kosong! Belum ada data bengkel." << endl;
-        cout << "Kembali Ke Menu..." << endl;
+        cout << "╭──────────────────────────────────────────╮\n";
+        cout << "│                                          │\n";
+        cout << "│         Database Bengkel Kosong!         │\n";
+        cout << "│                                          │\n";
+        cout << "╰──────────────────────────────────────────╯\n";
         return;
     }
 
-    // Jalankan Sorting Bubble Sort A-Z sebelum ditampilkan
     bubbleSortBengkel();
 
-    // Tampilkan data dalam bentuk tabel sederhana
-    cout << "---------------------------------------------------------\n";
-    cout << "| No | ID   | Nama Bengkel              | Daerah        |\n";
-    cout << "---------------------------------------------------------\n";
+    cout << "╭────┬─────┬──────────────────────┬───────────────────────────╮\n";
+    cout << "│ " << left << setw(2) << "No" << " │ "
+         << setw(3) << "ID" << " │ " 
+         << setw(20) << "Nama Bengkel" << " │ " 
+         << setw(25) << "Daerah" << " │\n";
+    cout << "├────┼─────┼──────────────────────┼───────────────────────────┤\n";
+    
     for (int i = 0; i < jumlahBengkel; i++) {
-        cout << "| " << (i + 1) << "  | " 
-             << databaseBengkel[i].id << "    | "
-             << databaseBengkel[i].namaBengkel << "\t\t| "
-             << databaseBengkel[i].daerah << "\t|\n";
+        // Sudah diganti menjadi .nama dan .alamat
+        cout << "│ " << left << setw(2) << (i + 1) << " │ " 
+             << setw(3) << dataBengkel[i].id << " │ "
+             << setw(20) << dataBengkel[i].nama << " │ " 
+             << setw(25) << dataBengkel[i].alamat << " │\n";
     }
-    cout << "---------------------------------------------------------\n";
-    cout << "Kembali Ke Menu..." << endl;
+    cout << "╰────┴─────┴──────────────────────┴───────────────────────────╯\n";
+}
+
+// ======================================================
+// TUGAS SANDI: MENU 1 - CARI BENGKEL BERDASARKAN DAERAH
+// ======================================================
+
+void cariBengkelByDaerah() {
+    string inputDaerah;
+    
+    cout << "╭─ Masukkan nama daerah yang dicari: ";
+    getline(cin >> ws, inputDaerah);
+    
+    // pushSearchHistory("Mencari Daerah: " + inputDaerah); 
+    
+    cout << "│\n";
+    
+    bool ditemukan = false;
+    for (int i = 0; i < jumlahBengkel; i++) {
+        // Sudah diganti menjadi .alamat
+        if (dataBengkel[i].alamat.find(inputDaerah) != string::npos) {
+            if (!ditemukan) {
+                cout << "├─ Hasil Pencarian:\n";
+                cout << "│\n";
+            }
+            // Sudah diganti menjadi .nama dan .alamat
+            cout << "│  ├─ ID      : " << dataBengkel[i].id << "\n";
+            cout << "│  ├─ Bengkel : " << dataBengkel[i].nama << "\n";
+            cout << "│  │  Daerah  : " << dataBengkel[i].alamat << "\n";
+            cout << "│  │\n";
+            ditemukan = true;
+        }
+    }
+
+    if (!ditemukan) {
+        cout << "├─ Hasil Pencarian: Tidak ditemukan data di daerah tersebut.\n";
+    }
+    
+    cout << "╰──────────────────────────────────────────────────\n";
 }
