@@ -35,34 +35,33 @@ void tampilkanSemuaData() {
 
     bubbleSortBengkel();
 
-    cout << "╭────┬─────┬──────────────────────┬───────────────────────────╮\n";
+    cout << "╭────┬──────────────────────┬───────────────────────────┬──────────────────────╮\n";
     cout << "│ " << left << setw(2) << "No" << " │ "
-         << setw(3) << "ID" << " │ " 
          << setw(20) << "Nama Bengkel" << " │ " 
-         << setw(25) << "Daerah" << " │\n";
-    cout << "├────┼─────┼──────────────────────┼───────────────────────────┤\n";
+         << setw(25) << "Daerah" << " │ "
+         << setw(20) << "Jenis Layanan" << " │\n";
+    cout << "├────┼──────────────────────┼───────────────────────────┼──────────────────────┤\n";
     
     for (int i = 0; i < jumlahBengkel; i++) {
-        // Sudah diganti menjadi .nama dan .alamat
         cout << "│ " << left << setw(2) << (i + 1) << " │ " 
-             << setw(3) << dataBengkel[i].id << " │ "
              << setw(20) << dataBengkel[i].nama << " │ " 
-             << setw(25) << dataBengkel[i].alamat << " │\n";
+             << setw(25) << dataBengkel[i].alamat << " │ "
+             << setw(20) << dataBengkel[i].jenis_layanan << " │\n";
     }
-    cout << "╰────┴─────┴──────────────────────┴───────────────────────────╯\n";
+    cout << "╰────┴──────────────────────┴───────────────────────────┴──────────────────────╯\n";
 }
 
 // ======================================================
 // TUGAS SANDI: MENU 1 - CARI BENGKEL BERDASARKAN DAERAH
 // ======================================================
 
-void cariBengkelByDaerah() {
+bool cariBengkelByDaerah() {
     string inputDaerah;
     
     cout << "╭─ Masukkan nama daerah yang dicari: ";
     getline(cin >> ws, inputDaerah);
     
-    // pushSearchHistory("Mencari Daerah: " + inputDaerah); 
+    pushSearchHistory("Mencari Daerah: " + inputDaerah); 
     
     cout << "│\n";
     
@@ -77,6 +76,7 @@ void cariBengkelByDaerah() {
             // Sudah diganti menjadi .nama dan .alamat
             cout << "│  ├─ ID      : " << dataBengkel[i].id << "\n";
             cout << "│  ├─ Bengkel : " << dataBengkel[i].nama << "\n";
+            cout << "│  ├─ Layanan : " << dataBengkel[i].jenis_layanan << "\n";
             cout << "│  │  Daerah  : " << dataBengkel[i].alamat << "\n";
             cout << "│  │\n";
             ditemukan = true;
@@ -88,4 +88,14 @@ void cariBengkelByDaerah() {
     }
     
     cout << "╰──────────────────────────────────────────────────\n";
+    return ditemukan;
+}
+
+bool cekBengkelValid(string namaBengkel) {
+    for (int i = 0; i < jumlahBengkel; i++) {
+        if (dataBengkel[i].nama == namaBengkel) {
+            return true;
+        }
+    }
+    return false;
 }

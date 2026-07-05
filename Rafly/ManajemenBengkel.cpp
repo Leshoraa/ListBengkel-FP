@@ -1,5 +1,5 @@
 #include "ManajemenBengkel.h"
-#include "../Faris/FileHandling.h"
+#include "FileHandling.h"
 #include <iostream>
 #include <iomanip>
 #include <limits>
@@ -17,6 +17,16 @@ int cariBengkelByID(Bengkel data[], int n, int idCari) {
     return -1;          
 }
 
+//  SEARCHING - Linear Search berdasarkan Nama
+int cariBengkelByNama(Bengkel data[], int n, string namaCari) {
+    for (int i = 0; i < n; i++) {
+        if (data[i].nama == namaCari) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 
 //  HELPER - Tampilkan detail satu bengkel
 void tampilDetailBengkel(const Bengkel &b) {
@@ -26,7 +36,6 @@ void tampilDetailBengkel(const Bengkel &b) {
     cout << "│ Layanan      : " << b.jenis_layanan << endl;
     cout << "│ Alamat       : " << b.alamat << endl;
     cout << "│ No. Telepon  : " << b.no_telepon << endl;
-    cout << "│ Harga        : Rp " << fixed << setprecision(0) << b.harga << endl;
     cout << "╰──────────────────────────────────────────────────────\n";
 }
 
@@ -43,8 +52,7 @@ void updateBengkel(Bengkel *b) {
     cout << "│ 2. Jenis Layanan\n";
     cout << "│ 3. Alamat\n";
     cout << "│ 4. No. Telepon\n";
-    cout << "│ 5. Harga\n";
-    cout << "│ 6. Ubah Semua Data\n";
+    cout << "│ 5. Ubah Semua Data\n";
     cout << "│\n";
     cout << "├──── Pilih : ";
     cin >> pilihField;
@@ -70,10 +78,6 @@ void updateBengkel(Bengkel *b) {
             getline(cin, b->no_telepon);
             break;
         case 5:
-            cout << "Harga baru : Rp ";
-            cin >> b->harga;
-            break;
-        case 6:
             cout << "Nama baru : ";
             getline(cin, b->nama);
             cout << "Layanan baru : ";
@@ -82,8 +86,6 @@ void updateBengkel(Bengkel *b) {
             getline(cin, b->alamat);
             cout << "No. Telepon baru : ";
             getline(cin, b->no_telepon);
-            cout << "Harga baru : Rp ";
-            cin >> b->harga;
             break;
         default:
             cout << "Pilihan tidak valid!" << endl;
@@ -130,39 +132,40 @@ void manajemenDataBengkel(Bengkel data[], int &n) {
         return;
     }
 
-    int idCari;
+    string namaCari;
     cout << "╭──────────────────────────────────────────────────────\n";
     cout << "│ MANAJEMEN DATA BENGKEL (UPDATE/DELETE)\n";
     cout << "├──────────────────────────────────────────────────────\n";
     
     cout << "│ Daftar Bengkel Tersedia:\n";
     cout << "│ ╭──────┬─────────────────────────────────╮\n";
-    cout << "│ │ ID   │ Nama Bengkel                    │\n";
+    cout << "│ │ No   │ Nama Bengkel                    │\n";
     cout << "│ ├──────┼─────────────────────────────────┤\n";
     for (int i = 0; i < n; i++) {
-        cout << "│ │ " << left << setw(4) << data[i].id 
+        cout << "│ │ " << left << setw(4) << (i + 1) 
              << " │ " << setw(31) << data[i].nama << " │\n";
     }
     cout << "│ ╰──────┴─────────────────────────────────╯\n";
 
-    cout << "│\n";
-    cout << "├──── Masukkan ID Bengkel : ";
-    cin >> idCari;
+    int index = -1;
+    while (true) {
+        cout << "│\n";
+        cout << "├──── Masukkan Nama Bengkel : ";
+        getline(cin >> ws, namaCari);
+
+        // SEARCHING - cari posisi index berdasarkan Nama
+        index = cariBengkelByNama(data, n, namaCari);
+
+        if (index == -1) {
+            cout << "│ Peringatan: Nama Bengkel [" << namaCari << "] tidak ada atau tidak terdaftar! Silakan coba lagi.\n";
+        } else {
+            break;
+        }
+    }
     system("clear");
 
-    // SEARCHING - cari posisi index berdasarkan ID
-    int index = cariBengkelByID(data, n, idCari);
-
-
-    if (index == -1) {
-        cout << "\n╭──────────────────────────────────────────────────────\n";
-        cout << "│ ID Bengkel [" << idCari << "] tidak ditemukan!\n";
-        cout << "╰──────────────────────────────────────────────────────\n";
-        return;
-    }
-
     cout << "\n╭──────────────────────────────────────────────────────\n";
-    cout << "│ ID Bengkel [" << idCari << "] ditemukan!\n";
+    cout << "│ Nama Bengkel [" << namaCari << "] ditemukan!\n";
     cout << "╰──────────────────────────────────────────────────────\n";
     tampilDetailBengkel(data[index]);
 

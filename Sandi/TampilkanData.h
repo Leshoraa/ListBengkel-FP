@@ -23,6 +23,6 @@ extern int jumlahBengkel;
 // Prototipe fungsi utama sandi (Menu 3 & 1)
 void tampilkanSemuaData();
 void bubbleSortBengkel();
-void cariBengkelByDaerah();
+bool cariBengkelByDaerah();
 
 #endif
