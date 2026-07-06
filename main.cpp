@@ -11,6 +11,10 @@
 #include "Sandi/TampilkanData.cpp"
 #include <iomanip>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 using namespace std;
 
 Bengkel dataBengkel[MAX_DATA];
@@ -178,6 +182,9 @@ bool loginSistem() {
 }
 
 int main() {
+#ifdef _WIN32
+    SetConsoleOutputCP(CP_UTF8);
+#endif
     // Load data from file at startup
     loadData(dataBengkel, jumlahBengkel);
     
