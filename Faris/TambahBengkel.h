@@ -9,7 +9,7 @@ void tambahBengkel(Bengkel data[], int &n);
 //  DEKLARASI FUNGSI PENDUKUNG
 bool  arrayPenuh(int n);
 int   generateID(Bengkel data[], int n);
-void  inputDetailBengkel(Bengkel &b, int id);
+void  inputDetailBengkel(Bengkel data[], int n, Bengkel &b, int id);
 void  simpanKeBengkel(Bengkel data[], int &n, Bengkel baru);
 
 #endif

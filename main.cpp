@@ -1,6 +1,19 @@
 #include <iostream>
-#include "Affan/ServiceManager.h"
-#include "Rafly/ManajemenBengkel.h"  
+#include <cstdlib>
+#include <string>
+#include <fstream>
+#include "Utils.h"
+#include "Affan/BookingServis.cpp"
+#include "Affan/LogRiwayat.cpp"
+#include "Rafly/ManajemenBengkel.cpp"
+#include "Rafly/FileHandling.cpp"
+#include "Faris/TambahBengkel.cpp"
+#include "Sandi/TampilkanData.cpp"
+#include <iomanip>
+
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 using namespace std;
 
@@ -11,14 +24,14 @@ void tampilmenu() {
     cout << CYAN << "╭───────────────────────────────────────────╮\n";
     cout << "│ SISTEM MANAGEMEN BENGKEL\n";
     cout << "├───────────────────────────────────────────╯\n" << RESET;
-    cout << "│ 1. Cari Bengkel\n";
-    cout << "│ 2. Tambah bengkel\n";
-    cout << "│ 3. Tampilkan Semua Bengkel\n";
-    cout << "│ 4. Managemen Data Bengkel(Update/Delete)\n";
-    cout << "│ 5. Booking Service\n";
-    cout << "│ 6. Log Riwayat\n";
-    cout << "│ 7. Keluar\n";
-    cout << "│ 8. Statistik Data Bengkel\n";
+    cout << "│ 1. Pencarian Bengkel \n";
+    cout << "│ 2. Registrasi Bengkel Baru \n";
+    cout << "│ 3. Daftar Seluruh Bengkel \n";
+    cout << "│ 4. Manajemen Data Bengkel \n";
+    cout << "│ 5. Layanan Booking Servis \n";
+    cout << "│ 6. Riwayat Pencarian \n";
+    cout << "│ 7. Laporan & Statistik Data\n";
+    cout << "│ 8. Keluar Aplikasi\n";
     cout << CYAN << "├───────────────────────────────────────────╯\n" << RESET;
     cout << "│\n";
     cout << "╰──── Pilih menu : ";
@@ -35,33 +48,54 @@ void tampilkanStatistik(Bengkel data[], int n) {
         cout << MERAH << "│ Database masih kosong, belum ada statistik.\n" << RESET;
         return;
     }
-    float termurah = data[0].harga;
-    float termahal = data[0].harga;
-    float total = 0;
-    string namaTermurah = data[0].nama;
-    string namaTermahal = data[0].nama;
+    int totMotor = 0, totMobil = 0, totUmum = 0, totLain = 0;
     
     for (int i = 0; i < n; i++) {
-        if (data[i].harga < termurah) {
-            termurah = data[i].harga;
-            namaTermurah = data[i].nama;
+        if (data[i].jenis_layanan == "Spesialis Motor") {
+            totMotor++;
+        } else if (data[i].jenis_layanan == "Spesialis Mobil") {
+            totMobil++;
+        } else if (data[i].jenis_layanan == "Umum (Motor & Mobil)") {
+            totUmum++;
+        } else {
+            totLain++;
         }
-        if (data[i].harga > termahal) {
-            termahal = data[i].harga;
-            namaTermahal = data[i].nama;
-        }
-        total += data[i].harga;
     }
-    float rata = total / n;
     
-    cout << KUNING << "╭──────────────────────────────────────────────────────\n";
-    cout << "│ STATISTIK DATA BENGKEL\n";
-    cout << "├──────────────────────────────────────────────────────\n" << RESET;
-    cout << "│ Total Bengkel Terdaftar : " << CYAN << n << " Bengkel\n" << RESET;
-    cout << "│ Bengkel Termurah        : " << HIJAU << namaTermurah << " (Rp " << termurah << ")\n" << RESET;
-    cout << "│ Bengkel Termahal        : " << MERAH << namaTermahal << " (Rp " << termahal << ")\n" << RESET;
-    cout << "│ Rata-rata Harga Layanan : " << KUNING << "Rp " << rata << "\n" << RESET;
-    cout << KUNING << "╰──────────────────────────────────────────────────────\n" << RESET;
+    // Lambda untuk generate progress bar ASCII
+    auto getBar = [&](int count, int maxBarSize = 25) {
+        if (n == 0) return string("");
+        int barLength = (count * maxBarSize) / n;
+        string bar = "";
+        for (int i = 0; i < barLength; i++) bar += "█";
+        return bar;
+    };
+    
+    // Lambda untuk hitung persentase
+    auto getPct = [&](int count) {
+        if (n == 0) return 0.0f;
+        return ((float)count / n) * 100.0f;
+    };
+    
+    cout << KUNING << "╭──────────────────────────────────────────────────────────────────────\n";
+    cout << "│ VISUALISASI STATISTIK DATA BENGKEL (Total: " << n << ")\n";
+    cout << "├──────────────────────────────────────────────────────────────────────\n" << RESET;
+    
+    cout << "│ " << left << setw(22) << "Spesialis Motor" << " │ " << HIJAU << left << setw(25) << getBar(totMotor) << RESET 
+         << " │ " << totMotor << " (" << fixed << setprecision(1) << getPct(totMotor) << "%)\n";
+         
+    cout << "│ " << left << setw(22) << "Spesialis Mobil" << " │ " << BIRU << left << setw(25) << getBar(totMobil) << RESET 
+         << " │ " << totMobil << " (" << fixed << setprecision(1) << getPct(totMobil) << "%)\n";
+         
+    cout << "│ " << left << setw(22) << "Umum (Motor & Mobil)" << " │ " << KUNING << left << setw(25) << getBar(totUmum) << RESET 
+         << " │ " << totUmum << " (" << fixed << setprecision(1) << getPct(totUmum) << "%)\n";
+         
+    if (totLain > 0) {
+        cout << "│ " << left << setw(22) << "Layanan Lainnya" << " │ " << CYAN << left << setw(25) << getBar(totLain) << RESET 
+             << " │ " << totLain << " (" << fixed << setprecision(1) << getPct(totLain) << "%)\n";
+    }
+    
+    cout << KUNING << "╰──────────────────────────────────────────────────────────────────────\n" << RESET;
 }
 
 bool loginSistem() {
@@ -100,16 +134,34 @@ bool loginSistem() {
                 cout << MERAH << "│ Username atau password salah!\n" << RESET;
             }
         } else if (opsi == 2) {
-            string user, pass;
+            string user, pass, u, p;
             cout << "│ Buat Username : "; cin >> user;
-            cout << "│ Buat Password : "; cin >> pass;
-            ofstream file("data_users.txt", ios::app);
-            if (file.is_open()) {
-                file << user << " " << pass << "\n";
-                file.close();
-                cout << HIJAU << "│ Registrasi berhasil! Silakan Login.\n" << RESET;
+            
+            // Cek apakah username sudah ada
+            bool exists = false;
+            ifstream fileIn("data_users.txt");
+            if (fileIn.is_open()) {
+                while (fileIn >> u >> p) {
+                    if (u == user) {
+                        exists = true;
+                        break;
+                    }
+                }
+                fileIn.close();
+            }
+
+            if (exists) {
+                cout << MERAH << "│ Username sudah terdaftar! Silakan gunakan username lain.\n" << RESET;
             } else {
-                cout << MERAH << "│ Gagal membuat file pengguna.\n" << RESET;
+                cout << "│ Buat Password : "; cin >> pass;
+                ofstream fileOut("data_users.txt", ios::app);
+                if (fileOut.is_open()) {
+                    fileOut << user << " " << pass << "\n";
+                    fileOut.close();
+                    cout << HIJAU << "│ Registrasi berhasil! Silakan Login.\n" << RESET;
+                } else {
+                    cout << MERAH << "│ Gagal membuat file pengguna.\n" << RESET;
+                }
             }
         } else if (opsi == 3) {
             return false;
@@ -124,6 +176,9 @@ bool loginSistem() {
 }
 
 int main() {
+#ifdef _WIN32
+    SetConsoleOutputCP(CP_UTF8);
+#endif
     // Load data from file at startup
     loadData(dataBengkel, jumlahBengkel);
     
@@ -143,31 +198,25 @@ int main() {
         switch(pilihan) {
             case 1:
             {
-                int idCari;
                 cout << CYAN << "╭──────────────────────────────────────────────────────\n";
-                cout << "│ CARI BENGKEL\n";
+                cout << "│ CARI BENGKEL BERDASARKAN DAERAH\n";
                 cout << "├──────────────────────────────────────────────────────\n" << RESET;
-                cout << "│ Masukkan ID Bengkel yang dicari: ";
-                idCari = ambilInputAngka();
                 
-                int index = cariBengkelByID(dataBengkel, jumlahBengkel, idCari);
-                if (index != -1) {
-                    cout << HIJAU << "│\n│ Bengkel ditemukan!\n" << RESET;
-                    tampilDetailBengkel(dataBengkel[index]);
-                } else {
-                    cout << MERAH << "│\n│ Bengkel dengan ID [" << idCari << "] tidak ditemukan.\n" << RESET;
-                    cout << CYAN << "╰──────────────────────────────────────────────────────\n" << RESET;
-                }
+                // Panggil fungsi buatan Sandi
+                cariBengkelByDaerah();
                 
-                // Masukkan ke history
-                pushSearchHistory("Mencari ID: " + to_string(idCari));
                 break;
             }
             case 2:
                 tambahBengkel(dataBengkel, jumlahBengkel);
                 break;
             case 3:
-                cout << "Menu Tambahkan Semua Data\n";
+                cout << CYAN << "╭──────────────────────────────────────────────────────\n";
+                cout << "│ SEMUA DATA BENGKEL (SORTED A-Z)\n";
+                cout << "├──────────────────────────────────────────────────────\n" << RESET;
+                
+                // Panggil fungsi buatan Sandi
+                tampilkanSemuaData();
                 break;
             case 4:
                 manajemenDataBengkel(dataBengkel, jumlahBengkel);
@@ -178,23 +227,24 @@ int main() {
             case 6:
                 menuLogRiwayat();
                 break;
-            case 7:
+                case 7:
+                tampilkanStatistik(dataBengkel, jumlahBengkel);
+                break;
+            case 8:
                 cout << HIJAU << "Terimakasih\n" << RESET;
                 dealokasiMemori();
                 break;
-            case 8:
-                tampilkanStatistik(dataBengkel, jumlahBengkel);
-                break;
+            
             default:
                 cout << MERAH << "Pilihan Tidak Valid!!\n" << RESET;
                 break;
         }
         cout << endl;
-        if (pilihan != 7) {
+        if (pilihan != 8) {
             cout << "Tekan Enter untuk melanjutkan...";
             cin.ignore(10000, '\n');
             cin.get();
         }
-    } while (pilihan != 7);
+    } while (pilihan != 8);
     return 0;
 }

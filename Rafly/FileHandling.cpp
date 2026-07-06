@@ -20,8 +20,7 @@ void saveData(Bengkel data[], int n) {
              << data[i].nama << "|"
              << data[i].jenis_layanan << "|"
              << data[i].alamat << "|"
-             << data[i].no_telepon << "|"
-             << data[i].harga << endl;
+             << data[i].no_telepon << endl;
     }
     
     file.close();
@@ -62,11 +61,11 @@ void loadData(Bengkel data[], int &n) {
         line.erase(0, pos + 1);
 
         pos = line.find('|');
-        if (pos == string::npos) continue;
-        data[n].no_telepon = line.substr(0, pos);
-        line.erase(0, pos + 1);
-
-        data[n].harga = stof(line);
+        if (pos != string::npos) {
+            data[n].no_telepon = line.substr(0, pos);
+        } else {
+            data[n].no_telepon = line;
+        }
         
         n++;
     }

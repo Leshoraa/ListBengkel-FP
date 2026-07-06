@@ -10,6 +10,9 @@ int jumlahBengkel = 0;
 
 void pushSearchHistory(string aktivitas); 
 
+// ========================================================
+// 1. FUNGSI BUBBLE SORT (CUMA ADA SATU DI SINI)
+// ========================================================
 void bubbleSortBengkel() {
     for (int i = 0; i < jumlahBengkel - 1; i++) {
         for (int j = 0; j < jumlahBengkel - i - 1; j++) {
@@ -22,6 +25,9 @@ void bubbleSortBengkel() {
     }
 }
 
+// ========================================================
+// 2. FUNGSI TAMPILKAN DATA
+// ========================================================
 void tampilkanSemuaData() {
     if (jumlahBengkel == 0) {
         cout << "  ┌────────────────────────────────────────┐\n";
@@ -38,13 +44,16 @@ void tampilkanSemuaData() {
     
     for (int i = 0; i < jumlahBengkel; i++) {
         cout << "  │ " << (i + 1) << "\t│ "
-             << dataBengkel[i].id << "\t│ "
-             << dataBengkel[i].nama << "\t\t│ "
-             << dataBengkel[i].alamat << "\t\t  │\n";
+            << dataBengkel[i].id << "\t│ "
+            << dataBengkel[i].nama << "\t\t│ "
+            << dataBengkel[i].alamat << "\t\t  │\n";
     }
     cout << "  └────┴──────┴─────────────────────────┴─────────────────────────┘\n";
 }
 
+// ========================================================
+// 3. FUNGSI CARI BENGKEL BY DAERAH
+// ========================================================
 void cariBengkelByDaerah() {
     string inputDaerah;
     cout << "  ┌─ Masukkan nama daerah yang dicari: ";

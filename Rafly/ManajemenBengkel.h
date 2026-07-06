@@ -9,7 +9,6 @@ struct Bengkel {
     string jenis_layanan;
     string alamat;
     string no_telepon;
-    float  harga;
 };
 
 const int MAX_DATA = 100;

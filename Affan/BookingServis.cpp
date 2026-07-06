@@ -8,12 +8,16 @@ using namespace std;
 struct BookingNode {
     int tokenId;
     string customerName;
+    string namaBengkel;
     string layanan;
     BookingNode* next;
 };
 
 BookingNode* queueFront = nullptr;
 BookingNode* queueRear = nullptr;
+
+extern bool cariBengkelByDaerah();
+extern bool cekBengkelValid(string);
 
 /**
  * @brief Daftarin pelanggan baru ke antrean servis.
@@ -22,10 +26,31 @@ BookingNode* queueRear = nullptr;
  * Token antrean di-generate otomatis acak.
  */
 void enqueueBooking() {
+    cout << "\n--- Cari Bengkel Berdasarkan Lokasi ---\n";
+    while (true) {
+        if (cariBengkelByDaerah()) {
+            break;
+        } else {
+            cout << "│ [!] Silakan coba masukkan nama daerah lain yang tersedia.\n\n";
+        }
+    }
+    cout << "\n";
+
     string customerName;
     cout << "╭──── Masukkan Nama Pelanggan: ";
-    cin.ignore();
     getline(cin, customerName);
+
+    string pilihanBengkel;
+    while (true) {
+        cout << "├──── Masukkan Nama Bengkel yang Dipilih: ";
+        getline(cin, pilihanBengkel);
+        
+        if (cekBengkelValid(pilihanBengkel)) {
+            break;
+        } else {
+            cout << "│ [!] Nama Bengkel tidak valid atau tidak terdaftar. Silakan periksa kembali ketikan Anda.\n";
+        }
+    }
 
     cout << "│\n";
     cout << "│ 1. Kendala Kerusakan\n";
@@ -56,6 +81,7 @@ void enqueueBooking() {
 
     newNode->tokenId = newToken;
     newNode->customerName = customerName;
+    newNode->namaBengkel = pilihanBengkel;
     newNode->layanan = detailLayanan;
     newNode->next = nullptr;
 
@@ -66,12 +92,31 @@ void enqueueBooking() {
         queueRear = newNode;
     }
     
+    // --- CETAK TIKET ANTREAN ---
+    bool isNotaCreated = false;
+    string filename = "nota_booking_" + to_string(newToken) + ".txt";
+    ofstream nota(filename);
+    if (nota.is_open()) {
+        nota << "==========================================\n";
+        nota << "        STATUS TIKET (REAL-TIME)\n";
+        nota << "==========================================\n";
+        nota << "Token   : [" << newToken << "]\n";
+        nota << "Nama    : " << customerName << "\n";
+        nota << "Bengkel : " << pilihanBengkel << "\n";
+        nota << "Layanan : " << detailLayanan << "\n";
+        nota << "Status  : Menunggu Giliran\n";
+        nota << "==========================================\n";
+        nota << "Terima kasih, silakan tunggu panggilan!\n";
+        nota.close();
+        isNotaCreated = true;
+    }
+    // ------------------------
+
     cout << "\n\n\n";
-    cout << "╭──────────────────────────────────────────────────────\n";
-    cout << "\n";
     cout << "╭──────────────────────────────────────────────────────\n";
     cout << "│\n";
     cout << "│ Token [" << newToken << "] berhasil didaftarkan ke dalam antrean." << endl;
+    if (isNotaCreated) cout << "│ Tiket tercetak di file: " << filename << endl;
     cout << "│\n";
     cout << "╰──────────────────────────────────────────────────────\n\n\n\n";
 }
@@ -91,28 +136,27 @@ void dequeueBooking() {
     cout << "\nMemanggil Antrean:" << endl;
     cout << "Token   : [" << temp->tokenId << "]" << endl;
     cout << "Nama    : " << temp->customerName << endl;
+    cout << "Bengkel : " << temp->namaBengkel << endl;
     cout << "Layanan : " << temp->layanan << endl;
     cout << "Silakan menuju area servis.\n" << endl;
-    
-    // --- CETAK NOTA BONUS ---
+
+    // --- UPDATE STATUS DI NOTA ---
     string filename = "nota_booking_" + to_string(temp->tokenId) + ".txt";
     ofstream nota(filename);
     if (nota.is_open()) {
         nota << "==========================================\n";
-        nota << "          NOTA BOOKING SERVIS\n";
+        nota << "        STATUS TIKET (REAL-TIME)\n";
         nota << "==========================================\n";
         nota << "Token   : [" << temp->tokenId << "]\n";
         nota << "Nama    : " << temp->customerName << "\n";
+        nota << "Bengkel : " << temp->namaBengkel << "\n";
         nota << "Layanan : " << temp->layanan << "\n";
-        nota << "Status  : Telah Dipanggil\n";
+        nota << "Status  : SELESAI DIPANGGIL\n";
         nota << "==========================================\n";
-        nota << "Terima kasih telah menggunakan jasa kami!\n";
+        nota << "Terima kasih telah menggunakan layanan kami!\n";
         nota.close();
-        cout << "[Sistem] Nota tercetak di file: " << filename << endl;
-    } else {
-        cout << "[Sistem] Gagal mencetak nota file." << endl;
+        cout << "Status tiket pada file " << filename << " telah diupdate menjadi SELESAI DIPANGGIL.\n\n";
     }
-    // ------------------------
 
     delete temp;
 }
@@ -127,7 +171,7 @@ void displayQueue() {
     BookingNode* current = queueFront;
     int no = 1;
     while (current) {
-        cout << no++ << ". Token [" << current->tokenId << "] - " << current->customerName << " (" << current->layanan << ")" << endl;
+        cout << no++ << ". Token [" << current->tokenId << "] - " << current->customerName << " @ " << current->namaBengkel << " (" << current->layanan << ")" << endl;
         current = current->next;
     }
 }
@@ -138,8 +182,8 @@ void menuBookingServis() {
         cout << "\n╭───────────────────────────────────────────╮\n";
         cout << "│ BOOKING SERVICE (Antrean)\n";
         cout << "├───────────────────────────────────────────╯\n";
-        cout << "│ 1. Ambil Antrean (Enqueue)\n";
-        cout << "│ 2. Panggil Antrean (Dequeue)\n";
+        cout << "│ 1. Ambil Antrean \n";
+        cout << "│ 2. Panggil Antrean \n";
         cout << "│ 3. Lihat Daftar Antrean\n";
         cout << "│ 4. Kembali ke Menu Utama\n";
         cout << "├───────────────────────────────────────────╯\n";

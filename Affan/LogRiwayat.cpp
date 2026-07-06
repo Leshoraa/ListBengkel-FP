@@ -9,6 +9,7 @@ struct HistoryNode {
 };
 
 HistoryNode* stackTop = nullptr;
+HistoryNode* redoStackTop = nullptr;
 
 void displaySearchHistory() {
     if (!stackTop) {
@@ -35,6 +36,13 @@ void pushSearchHistory(string keyword) {
     newNode->keyword = keyword;
     newNode->next = stackTop;
     stackTop = newNode;
+
+    // Bersihkan stack redo ketika ada pencarian baru
+    while (redoStackTop) {
+        HistoryNode* temp = redoStackTop;
+        redoStackTop = redoStackTop->next;
+        delete temp;
+    }
 }
 
 void popSearchHistory() {
@@ -44,8 +52,27 @@ void popSearchHistory() {
     }
     HistoryNode* temp = stackTop;
     stackTop = stackTop->next;
-    cout << "Riwayat pencarian terakhir ('" << temp->keyword << "') telah dihapus." << endl;
-    delete temp;
+    
+    // Simpan ke redo stack
+    temp->next = redoStackTop;
+    redoStackTop = temp;
+    
+    cout << "Riwayat pencarian terakhir ('" << temp->keyword << "') telah di-Undo." << endl;
+}
+
+void redoSearchHistory() {
+    if (!redoStackTop) {
+        cout << "Tidak ada riwayat untuk dikembalikan (Redo)." << endl;
+        return;
+    }
+    HistoryNode* temp = redoStackTop;
+    redoStackTop = redoStackTop->next;
+    
+    // Kembalikan ke undo stack
+    temp->next = stackTop;
+    stackTop = temp;
+    
+    cout << "Riwayat pencarian ('" << temp->keyword << "') telah di-Redo." << endl;
 }
 
 void menuLogRiwayat() {
@@ -56,7 +83,8 @@ void menuLogRiwayat() {
         cout << "├───────────────────────────────────────────╯\n";
         cout << "│ 1. Tampilkan Riwayat\n";
         cout << "│ 2. Undo (Hapus Riwayat Terakhir)\n";
-        cout << "│ 3. Kembali ke Menu Utama\n";
+        cout << "│ 3. Redo (Kembalikan Riwayat)\n";
+        cout << "│ 4. Kembali ke Menu Utama\n";
         cout << "├───────────────────────────────────────────╯\n";
         cout << "│\n";
         cout << "╰──── Pilih menu: ";
@@ -70,12 +98,15 @@ void menuLogRiwayat() {
                 popSearchHistory();
                 break;
             case 3:
+                redoSearchHistory();
+                break;
+            case 4:
                 cout << "Kembali..." << endl;
                 break;
             default:
                 cout << "Pilihan tidak valid!" << endl;
         }
-    } while (opsi != 3);
+    } while (opsi != 4);
 }
 
 void clearStack() {
@@ -86,4 +117,12 @@ void clearStack() {
         current = next;
     }
     stackTop = nullptr;
+
+    current = redoStackTop;
+    while (current != nullptr) {
+        HistoryNode* next = current->next;
+        delete current;
+        current = next;
+    }
+    redoStackTop = nullptr;
 }
