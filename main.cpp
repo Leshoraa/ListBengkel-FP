@@ -110,37 +110,42 @@ bool loginSistem() {
 
         if (opsi == 1) {
             string user, pass, u, p;
+            int idUser, idU;
             cout << "│ Username : "; cin >> user;
             cout << "│ Password : "; cin >> pass;
             bool found = false;
             ifstream file("data_users.txt");
             if (file.is_open()) {
-                while (file >> u >> p) {
+                while (file >> idU >> u >> p) {
                     if (u == user && p == pass) {
                         found = true;
+                        idUser = idU;
                         break;
                     }
                 }
                 file.close();
             }
             if (found) {
-                cout << HIJAU << "│ Login Berhasil!\n" << RESET;
+                cout << HIJAU << "│ Login Berhasil! (ID Anda: " << idUser << ")\n" << RESET;
                 isLogin = true;
             } else {
                 cout << MERAH << "│ Username atau password salah!\n" << RESET;
             }
         } else if (opsi == 2) {
             string user, pass, u, p;
+            int idU;
             cout << "│ Buat Username : "; cin >> user;
             
-            // Cek apakah username sudah ada
+            // Cek apakah username sudah ada dan cari maxID
             bool exists = false;
+            int maxId = 0;
             ifstream fileIn("data_users.txt");
             if (fileIn.is_open()) {
-                while (fileIn >> u >> p) {
+                while (fileIn >> idU >> u >> p) {
+                    if (idU > maxId) maxId = idU;
                     if (u == user) {
                         exists = true;
-                        break;
+                        // Jangan di-break agar bisa menemukan maxId dari seluruh file
                     }
                 }
                 fileIn.close();
@@ -150,11 +155,12 @@ bool loginSistem() {
                 cout << MERAH << "│ Username sudah terdaftar! Silakan gunakan username lain.\n" << RESET;
             } else {
                 cout << "│ Buat Password : "; cin >> pass;
+                int newId = maxId + 1;
                 ofstream fileOut("data_users.txt", ios::app);
                 if (fileOut.is_open()) {
-                    fileOut << user << " " << pass << "\n";
+                    fileOut << newId << " " << user << " " << pass << "\n";
                     fileOut.close();
-                    cout << HIJAU << "│ Registrasi berhasil! Silakan Login.\n" << RESET;
+                    cout << HIJAU << "│ Registrasi berhasil! (ID Baru Anda: " << newId << "). Silakan Login.\n" << RESET;
                 } else {
                     cout << MERAH << "│ Gagal membuat file pengguna.\n" << RESET;
                 }
